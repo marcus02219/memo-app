@@ -1,12 +1,17 @@
 import express from 'express';
 import path from 'path';
-import WebpackDevServer from 'webpack-dev-server';
+
 import webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
+
 import morgan from 'morgan'; // HTTP REQUEST LOGGER
 import bodyParser from 'body-parser'; // PARSE HTML BODY
+
 import mongoose from 'mongoose';
 import session from 'express-session';
+
 import api from './routes';
+
 
 const app = express();
 const port = 3000;
@@ -14,8 +19,6 @@ const devPort = 4000;
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-app.use('/api', api);
-
 
 /* mongodb connection */
 const db = mongoose.connection;
@@ -33,14 +36,12 @@ app.use(session({
 
 app.use('/', express.static(path.join(__dirname, './../public')));
 
-/* handle error */
-app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
 
-app.get('/hello', (req, res) => {
-    return res.send('Hello CodeLab');
+/* setup routers & static directory */
+app.use('/api', api);
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './../public/index.html'));
 });
 
 app.listen(port, () => {
