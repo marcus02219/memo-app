@@ -11,6 +11,7 @@ class Authentication extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   handleChange(e) {
@@ -49,7 +50,15 @@ class Authentication extends React.Component {
           }
       );
   }
-
+  handleKeyPress(e) {
+    if(e.charCode==13) {
+      if(this.props.mode) {
+         this.handleLogin();
+      } else {
+         this.handleRegister();
+      }
+    }
+  }
   render() {
 
     const inputBoxes = (
@@ -60,8 +69,8 @@ class Authentication extends React.Component {
                   name="username"
                   type="text"
                   className="validate"
-                  onChange={this.handleChange}
-                  />
+                  value={this.state.username}
+                  onChange={this.handleChange}/>
               </div>
               <div className="input-field col s12">
                   <label>Password</label>
@@ -70,7 +79,8 @@ class Authentication extends React.Component {
                   type="password"
                   className="validate"
                   onChange={this.handleChange}
-                  />
+                  value={this.state.password}
+                  onKeyPress={this.handleKeyPress}/>
               </div>
           </div>
       );

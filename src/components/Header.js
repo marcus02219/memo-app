@@ -6,16 +6,16 @@ class Header extends React.Component {
         <li>
           <Link to="/login">
             <i className="material-icons">vpn_key</i>
-          </Link>            
+          </Link>
         </li>
       );
 
       const logoutButton = (
-        <li>
-            <a>
-                <i className="material-icons">lock_open</i>
-            </a>
-        </li>
+          <li>
+              <a onClick={this.props.onLogout}>
+                  <i className="material-icons">lock_open</i>
+              </a>
+          </li>
       );
 
       return (
